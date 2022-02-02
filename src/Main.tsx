@@ -1,23 +1,23 @@
 import React from 'react';
-import './App.css';
+import './Main.scss';
 
-function App() {
+function Main() {
   return (
-    <div className='App-wrap'>
-      <header className='App-header'>
+    <div className='main-wrap'>
+      <header className='main-header'>
         <h1>Lifelog</h1>
         <p>효동동 Blog</p>
       </header>
-      <body className='App-body'>
+      <body className='main-body'>
         <section className='blog'>
           Node.js를 활용한 게시판 구현(예정)
         </section>
       </body>
-      <footer className='App-footer'>
+      <footer className='main-footer'>
         ((이곳은 푸터영역))
       </footer>
     </div>
   );
 }
 
-export default App;
+export default Main;

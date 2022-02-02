@@ -1,0 +1,20 @@
+/* 페이지별 세부 스타일 설정 */
+
+.main-wrap {
+  font-family: 'noto-sans KR';
+
+  .main-header {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+  
+  .main-body {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  
+  .main-footer {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+}
