@@ -3,18 +3,23 @@ import './Main.scss';
 
 function Main() {
   return (
-    <div className='main-wrap'>
-      <header className='main-header'>
-        <h1>Lifelog</h1>
-        <p>효동동 Blog</p>
+    <div id='main-wrap'>
+      <header>
+        <div className='header-wrap'>
+          <h1>Lifelog</h1>
+          <p>효동동 Blog</p>
+        </div>
       </header>
-      <body className='main-body'>
-        <section className='blog'>
+      <body>
+        <section className=''>
           Node.js를 활용한 게시판 구현(예정)
         </section>
       </body>
-      <footer className='main-footer'>
-        ((이곳은 푸터영역))
+      <footer>
+        <div className='footer-wrap'>
+          <h1>Lifelog</h1>
+          <p>ⓒ jeong_hYoon. All rights reserved.</p>
+        </div>
       </footer>
     </div>
   );
