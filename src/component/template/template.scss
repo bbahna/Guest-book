@@ -21,6 +21,16 @@ header {
     font-size: 16px;
     }
   }
+  nav {
+    .navi-menu {
+      color: #292d36;
+      li {
+        width: fit-content;
+        font-size: 15px;
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 footer {
