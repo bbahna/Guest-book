@@ -2,13 +2,14 @@ import React from 'react';
 import './main.scss';
 import Template from '../../component/template/template';
 
-function Main() {
+function MainPage() {
   return (
     <div id='main-wrap'>
       <Template>
         <body>
-          <section className=''>
-            Node.js를 활용한 게시판 구현(예정)
+          <section>
+            메인 페이지<br/>
+            - 게시판 글 목록
           </section>
         </body>
       </Template>
@@ -16,4 +17,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default MainPage;
