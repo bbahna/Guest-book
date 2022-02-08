@@ -1,7 +1,8 @@
 import React from 'react';
 import './template.scss';
 
-interface IProps extends React.Props<{}> {
+interface IProps {
+  children?: React.ReactElement;
 }
 
 const Template = ({children}: IProps) => {
