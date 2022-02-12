@@ -8,7 +8,7 @@ function MainPage() {
       <Template>
         <body>
           <section>
-            메인 페이지<br/>
+            1. 메인 페이지<br/>
             - 게시판 글 목록
           </section>
         </body>

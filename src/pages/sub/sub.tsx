@@ -8,7 +8,7 @@ function SubPage() {
       <Template>
         <body>
           <section>
-            SubPage<br/>
+            2. 서브 페이지<br/>
             - 게시판 글 작성
           </section>
         </body>
