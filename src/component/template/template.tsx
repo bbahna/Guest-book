@@ -7,6 +7,12 @@ interface IProps {
 }
 
 const Template = ({children}: IProps) => {
+  const openPopup = () => {
+    const url = './popup';
+    const options = 'width=1000, height=620, top=20, left=250';
+    window.open(url, "popupName", options);
+  };
+
   return (
     <>
       <header>
@@ -22,6 +28,7 @@ const Template = ({children}: IProps) => {
             <li>
               <Link to="/sub">Sub</Link>
             </li>
+            <li onClick={openPopup}>Popup</li>
           </ul>
         </nav>
       </header>
