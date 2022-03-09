@@ -10,8 +10,12 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
-    padding: 70px 15px 90px;
+    padding: 50px 15px;
     box-sizing: border-box;
     font-size: 15px;
+    h2 {
+      margin: 0;
+      font-size: 18px;
+    }
   }
 }
