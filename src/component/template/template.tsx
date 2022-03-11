@@ -23,12 +23,12 @@ const Template = ({children}: IProps) => {
         <nav>
           <ul className='navi-menu'>
             <li>
-              <Link to="/">Main</Link>
+              <Link to="/">* Main</Link>
             </li>
             <li>
-              <Link to="/sub">Sub</Link>
+              <Link to="/sub">* Sub</Link>
             </li>
-            <li onClick={openPopup}>Popup</li>
+            <li onClick={openPopup}>- Popup</li>
           </ul>
         </nav>
       </header>
