@@ -13,5 +13,12 @@
     padding: 70px 15px 90px;
     box-sizing: border-box;
     font-size: 15px;
+    .madalView {
+      margin-top: 15px;
+      button {
+        font-size: 15px;
+        cursor: pointer;
+      }
+    }
   }
 }
