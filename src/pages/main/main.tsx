@@ -12,9 +12,17 @@ function MainPage() {
             - 게시판 글 목록
           </section>
           <section className='madalView'>
-            <button>
+            {/* Modal-button */}
+            <button className='madalBtn'>
               Modal view
             </button>
+            {/* Modal-contents */}
+            <div className='madalWrap'>
+              <div className='outArea'/>
+              <div className='modalBox'>
+                당신은 Modal을 발견했습니다.
+              </div>
+            </div>
           </section>
         </body>
       </Template>
