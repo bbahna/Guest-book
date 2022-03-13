@@ -22,7 +22,7 @@ function MainPage() {
             </button>
             {/* Modal-contents */}
             <div className={`madalWrap ${ModalShow ? 'close' : 'open'}`}>
-              <div className='outArea'/>
+              <div className='outArea' onClick={toggleModalShow}/>
               <div className='modalBox'>
                 당신은 Modal을 발견했습니다.
               </div>
