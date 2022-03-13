@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './main.scss';
 import Template from '../../component/template/template';
 
 function MainPage() {
+  // Modal-button Click시, useState 상태변경
+  const [ModalShow, setModalShow] = useState(true);
+  const toggleModalShow = () => setModalShow(!ModalShow);
+
   return (
     <div id='main-wrap'>
       <Template>
@@ -13,11 +17,11 @@ function MainPage() {
           </section>
           <section className='madalView'>
             {/* Modal-button */}
-            <button className='madalBtn'>
+            <button className='madalBtn' onClick={toggleModalShow}>
               Modal view
             </button>
             {/* Modal-contents */}
-            <div className='madalWrap'>
+            <div className={`madalWrap ${ModalShow ? 'close' : 'open'}`}>
               <div className='outArea'/>
               <div className='modalBox'>
                 당신은 Modal을 발견했습니다.
