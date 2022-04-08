@@ -1,4 +1,4 @@
-# typescript-react learned recode
+# Typescript/React learned recode
 `$ npx create-react-app "typescript-react" --typescript`
 
 **Code/Readme GitHub commit**
