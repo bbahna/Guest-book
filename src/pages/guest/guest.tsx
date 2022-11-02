@@ -1,18 +1,22 @@
-import React from 'react';
-import './guest.scss';
 import Template from '../../component/template/template';
+import './guest.scss';
 
 function GuestPage() {
   return (
-    <div id='guest-wrap'>
-      <Template>
-        <body>
-          <section className='pageExplain'>
-            방명록 페이지
-          </section>
-        </body>
-      </Template>
-    </div>
+    <Template>
+      <div className='guest-wrap'>
+        <div className='guest-top'>
+          <h2>Guest-book</h2>
+          <p>멋진 방명록을 남겨주세요.</p>
+        </div>      
+        <ul className='chat-wrap'>
+          <li className='chat-box' style={{background: "#ddd"}}>
+            <h3>글 제목</h3>
+            <p>글 내용</p>
+          </li>
+        </ul>
+      </div>
+    </Template>
   );
 }
 

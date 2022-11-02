@@ -1,17 +1,67 @@
 // 방명록-페이지 세부 스타일 설정
 
-#guest-wrap {
-  font-family: 'Noto Sans KR', sans-serif;
-  color: #333;
-  
-  body {
+.guest-wrap {
+  width: 1200px;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  padding: 20px 120px;
+  box-sizing: border-box;
+  font-size: 15px;
+  .guest-top {
+    flex: 0 0 auto;
     display: flex;
     flex-flow: column nowrap;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    padding: 70px 15px 90px;
-    box-sizing: border-box;
-    font-size: 15px;
+    h2 {
+      margin-bottom: 10px;
+      font-size: 28px;
+      line-height: 22px;
+      color: #111;
+    }
+    p {
+      font-size: 15px;
+      font-weight: 300;
+    }
+  }
+  .chat-wrap {
+    flex: 1 1 auto;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-end;
+    padding: 0;
+    list-style: none;
+    .chat-box {
+      flex: 0 0 auto;
+      width: fit-content;
+      height: fit-content;
+      display: flex;
+      flex-flow: column nowrap;
+      min-width: 250px;
+      max-width: 500px;
+      margin-top: 13px;
+      padding: 10px;
+      border-radius: 8px 8px 0 8px;
+      box-shadow: 2px 3px 4px rgba(200, 200, 200, 0.5);
+      h3 {
+        margin: 0 0 5px;
+        font-size: 15.5px;
+        line-height: 18px;
+        font-weight: 500;
+      }
+      p {
+        font-size: 14px;
+      }
+    }
+  }
+  .chat-input {
+    width: 500px;
+    height: 80px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background: rgba(100, 100, 100, 0.8);
+    border-radius: 30px 30px 50px 50px;
+    bottom: 100px;
   }
 }
