@@ -14,14 +14,14 @@ const Template = ({children}: IProps) => {
   };
 
   return (
-    <>
+    <div className="template-wrap">
       <header>
-        <div className='header-wrap'>
+        <div className='global-navi'>
           <h1>Lifelog</h1>
           <p>효동동 Blog</p>
         </div>
         <nav>
-          <ul className='navi-menu'>
+          <ul className='side-navi'>
             <li>
               <Link to="/">*<b>Guset</b></Link>
             </li>
@@ -35,14 +35,14 @@ const Template = ({children}: IProps) => {
           </ul>
         </nav>
       </header>
-      {children}
+      <body>{children}</body>
       <footer>
         <div className='footer-wrap'>
           <h1>Lifelog</h1>
           <p>ⓒ jeong_hYoon. All rights reserved.</p>
         </div>
       </footer>
-    </>
+    </div>
   );
 };
 
