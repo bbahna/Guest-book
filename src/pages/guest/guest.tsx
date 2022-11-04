@@ -1,5 +1,6 @@
 import Template from '../../component/template/template';
 import './guest.scss';
+import chatList from '../../store/data.json';
 
 function GuestPage() {
   return (
@@ -14,6 +15,14 @@ function GuestPage() {
             <h3>글 제목</h3>
             <p>글 내용</p>
           </li>
+          {chatList.guest.map((o)=>{
+            return (
+              <li className='chat-box' style={{background: `${o.color}`}}>
+                <h3>{o.title}</h3>
+                <p>{o.body}</p>
+              </li>
+            )
+          })}
         </ul>
       </div>
     </Template>
