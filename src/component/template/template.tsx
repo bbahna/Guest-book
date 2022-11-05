@@ -35,7 +35,7 @@ const Template = ({children}: IProps) => {
           </ul>
         </nav>
       </header>
-      <body>{children}</body>
+      <div className='body'>{children}</div>
       <footer>
         <div className='footer-wrap'>
           <h1>Lifelog</h1>
