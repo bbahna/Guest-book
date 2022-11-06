@@ -5,7 +5,12 @@ body {
   padding: 0;
   overflow-x: auto;
   overflow-y: hidden;
-  h1, h2, p {
+  font-family: 'Noto Sans KR', sans-serif;
+  h1, h2, p, ul, li, input, button {
     margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style: none;
   }
 }

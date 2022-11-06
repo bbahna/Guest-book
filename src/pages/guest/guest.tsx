@@ -24,6 +24,24 @@ function GuestPage() {
             )
           })}
         </ul>
+        <div className='chat-input'>
+          <form>
+            <div className='input-wrap'>
+              <div className='chat-box'>
+                <input className='chat-title' placeholder='제목'/>
+                <input className='chat-body' placeholder='내용'/>
+              </div>
+              <ul className='color-select'>
+                <li className='color-1'/>
+                <li className='color-2'/>
+                <li className='color-3'/>
+                <li className='color-4'/>
+                <li className='color-5'/>
+              </ul>
+            </div>
+            <button>입력</button>
+          </form>
+        </div>
       </div>
     </Template>
   );

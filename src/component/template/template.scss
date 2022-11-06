@@ -4,7 +4,6 @@
   height: 100vh;
   display: flex;
   flex-flow: column nowrap;
-  font-family: 'Noto Sans KR', sans-serif;
   overflow-x: hidden;
   overflow-y: auto;
 
@@ -35,7 +34,7 @@
       position: absolute;
       z-index: 9;
       .side-navi {
-        margin: 15px 0 0;
+        margin-top: 15px;
         padding-left: 20px;
         list-style: none;
         li {
