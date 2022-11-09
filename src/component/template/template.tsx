@@ -23,7 +23,7 @@ const Template = ({children}: IProps) => {
         <nav>
           <ul className='side-navi'>
             <li>
-              <Link to="/">*<b>Guset</b></Link>
+              <Link to="/">*<b>Guest</b></Link>
             </li>
             <li>
               <Link to="/main">- Main</Link>
