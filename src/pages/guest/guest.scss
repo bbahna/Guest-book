@@ -1,11 +1,11 @@
 // 방명록-페이지 세부 스타일 설정
 
 .guest-wrap {
-  width: 1050px;
+  width: 1200px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-  padding: 20px 0;
+  padding: 20px 120px;
   box-sizing: border-box;
   font-size: 15px;
   .guest-top {
@@ -27,20 +27,20 @@
   .chat-wrap {
     flex: 1 1 auto;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column nowrap;
     align-items: flex-end;
-    list-style: none;
-    padding-bottom: 50px;
+    padding-bottom: 70px;
     .chat-box {
-      width: 250px;
-      height: 230px;
+      width: fit-content;
+      height: fit-content;
+      min-width: 250px;
+      max-width: 500px;
       flex: 0 0 auto;
       display: flex;
       flex-flow: column nowrap;
-      margin: 0 6px 13px 6px;
       margin-bottom: 13px;
       padding: 10px;
-      border-radius: 10px 10px 0 10px;
+      border-radius: 8px 8px 0 8px;
       box-shadow: 2px 3px 4px rgba(200, 200, 200, 0.5);
       box-sizing: border-box;
       h3 {
@@ -61,7 +61,7 @@
     align-items: center;
     justify-content: center;
     position: fixed;
-    bottom: 30px;
+    bottom: 50px;
     left: 50%;
     transform: translate(-50%, 0);
     padding: 10px 0;
@@ -79,7 +79,7 @@
           width: 300px;
           display: flex;
           flex-flow: column nowrap;
-          margin-bottom: 8px;
+          margin-bottom: 5px;
           padding: 8px;
           border-radius: 8px 8px 0 8px;
           background: #ffcad4;
