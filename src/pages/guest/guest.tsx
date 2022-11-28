@@ -1,3 +1,4 @@
+import React, { useRef } from 'react';
 import Template from '../../component/template/template';
 import './guest.scss';
 import useFetch from '../../hooks/useFetch';
@@ -11,6 +12,34 @@ interface IGuest {
 
 function GuestPage() {
   const guest : IGuest[] = useFetch("http://localhost:4000/guest");
+  
+  const titleRef = useRef<any>(null);
+  const bodyRef = useRef<any>(null);
+  const colorRef = useRef<any>(null);
+
+  function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    const enterdTitle = titleRef.current.value;
+    const enterdBody = bodyRef.current.value;
+    const enterColor = colorRef.current.value;
+  
+    fetch(`http://localhost:4000/guest`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        enterdTitle,
+        enterdBody,
+        enterColor,
+      }),
+    }).then(res => {
+      if (res.ok) {
+        alert("생성이 완료 되었습니다");
+      }
+    });
+  }
 
   return (
     <Template>
@@ -32,11 +61,11 @@ function GuestPage() {
           )}
         </ul>
         <div className='chat-input'>
-          <form>
+          <form onSubmit={onSubmit}>
             <div className='input-wrap'>
               <div className='chat-box'>
-                <input className='chat-title' placeholder='제목'/>
-                <input className='chat-body' placeholder='내용'/>
+                <input className='chat-title' placeholder='제목' ref={titleRef} />
+                <input className='chat-body' placeholder='내용' ref={bodyRef} />
               </div>
               <ul className='color-select'>
                 <li className='color-1'/>
