@@ -12,17 +12,9 @@ interface IGuest {
 
 function GuestPage() {
   const guest : IGuest[] = useFetch("http://localhost:4000/guest");
-  
-  const titleRef = useRef<any>(null);
-  const bodyRef = useRef<any>(null);
-  const colorRef = useRef<any>(null);
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-
-    const enterdTitle = titleRef.current.value;
-    const enterdBody = bodyRef.current.value;
-    const enterColor = colorRef.current.value;
   
     fetch(`http://localhost:4000/guest`, {
       method: "POST",
@@ -30,9 +22,9 @@ function GuestPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        enterdTitle,
-        enterdBody,
-        enterColor,
+        title: titleRef.current.value,
+        body: bodyRef.current.value,
+        // color: colorRef.current.value,
       }),
     }).then(res => {
       if (res.ok) {
@@ -40,6 +32,10 @@ function GuestPage() {
       }
     });
   }
+  
+  const titleRef = useRef<any>(null);
+  const bodyRef = useRef<any>(null);
+  // const colorRef = useRef<any>(null);
 
   return (
     <Template>
