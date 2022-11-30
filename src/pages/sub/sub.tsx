@@ -1,4 +1,4 @@
-import Template from '../../component/template/template';
+import Template from '../../components/template/template';
 import './sub.scss';
 
 function SubPage() {

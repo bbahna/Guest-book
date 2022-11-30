@@ -1,5 +1,6 @@
 /**
- * @description chat modal 컴포넌트
+ * @name chat-modal
+ * @description 미사용
  */
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -105,5 +106,7 @@ const ModalWrap = styled.div`
     }
   }
 `;
+
+
 
 export default ChatModal;
