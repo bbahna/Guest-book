@@ -3,8 +3,14 @@
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  h1, p {
+  overflow-x: auto;
+  overflow-y: hidden;
+  font-family: 'Noto Sans KR', sans-serif;
+  h1, h2, p, ul, li, input, button {
     margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style: none;
   }
 }

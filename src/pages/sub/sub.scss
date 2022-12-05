@@ -1,17 +1,10 @@
 // 서브-페이지 세부 스타일 설정
 
-#sub-wrap {
-  font-family: 'Noto Sans KR', sans-serif;
-  color: #333;
-  
-  body {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    padding: 70px 15px 90px;
-    box-sizing: border-box;
-    font-size: 15px;
-  }
+.sub-wrap {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 20px 80px;
+  box-sizing: border-box;
+  font-size: 15px;
 }
