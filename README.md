@@ -6,4 +6,4 @@
 2. add - i18next, swiper, hamburger, carousel, scrollSpy
 3. Style - responsive, grid/flex, theme, [modal](https://github.com/bbahna/typescript-react/pull/11)
 4. Route - main, sub, [popup](https://github.com/bbahna/typescript-react/pull/10)
-5. [CRUD](https://github.com/bbahna/Guest-book/issues/14) - REST API, json-server
+5. [CRUD](https://github.com/bbahna/Guest-book/pull/15) - REST API, json-server
