@@ -1,1 +1,1 @@
-export {default} from './sub';
+export { default } from './sub';
