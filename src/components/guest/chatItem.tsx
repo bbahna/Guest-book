@@ -32,10 +32,10 @@ function ChatItem({ id, title, body, color, setData } : IProps) {
     })
     .then(res => {
       if (res.ok) {
-        alert('저장이 완료되었습니다');
+        alert('수정이 완료되었습니다');
         setEdit(false);
       } else {
-        alert('저장이 실패하였습니다.');
+        alert('수정이 실패하였습니다.');
         // 취소버튼 추가하기
       }
     }
