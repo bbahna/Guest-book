@@ -8,13 +8,13 @@ import Popup from './pages/popup';
 import './index.scss';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Guest />} />
-      <Route path="/main" element={<Main />} />
-      <Route path="/sub" element={<Sub />} />
-      <Route path="/popup" element={<Popup />} />
-    </Routes>
-  </BrowserRouter>,
-  document.getElementById('root')
+	<BrowserRouter>
+		<Routes>
+			<Route path="/" element={<Guest />} />
+			<Route path="/main" element={<Main />} />
+			<Route path="/sub" element={<Sub />} />
+			<Route path="/popup" element={<Popup />} />
+		</Routes>
+	</BrowserRouter>,
+	document.getElementById('root'),
 );
