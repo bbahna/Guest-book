@@ -13,10 +13,12 @@ interface IProps {
 }
 
 function ChatItem({ id, title, body, color, setData }: IProps) {
-	// Update
 	const [edit, setEdit] = useState(false);
+	const [editTitle, setEditTitle] = useState<string>(title);
+	const [editBody, setEditBody] = useState<string>(body);
 	const titleRef = useRef<any>(null);
 	const bodyRef = useRef<any>(null);
+
 	const editToggle = () => setEdit(!edit);
 	function onSubmit() {
 		fetch(`http://localhost:4000/guest/${id}`, {
@@ -25,8 +27,8 @@ function ChatItem({ id, title, body, color, setData }: IProps) {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				title: titleRef.current.value,
-				body: bodyRef.current.value,
+				title: editTitle,
+				body: editBody,
 				color: color,
 			}),
 		}).then((res) => {
@@ -35,12 +37,16 @@ function ChatItem({ id, title, body, color, setData }: IProps) {
 				setEdit(false);
 			} else {
 				alert('수정이 실패하였습니다.');
-				// 취소버튼 추가하기
 			}
 		});
 	}
 
-	// Delete
+	const onCancel = () => {
+		setEditTitle(title);
+		setEditBody(body);
+		setEdit(false);
+	};
+
 	const onDelete = () => {
 		if (window.confirm('삭제 하시겠습니까?')) {
 			fetch(`http://localhost:4000/guest/${id}`, {
@@ -78,19 +84,26 @@ function ChatItem({ id, title, body, color, setData }: IProps) {
 			<ChatBox style={{ background: `${color}` }}>
 				<input
 					className="chat-title"
-					defaultValue={title}
+					value={editTitle}
 					placeholder="제목"
 					ref={titleRef}
 					disabled={!edit}
 					required
 					autoFocus
 				/>
-				<input className="chat-body" defaultValue={body} placeholder="내용" ref={bodyRef} disabled={!edit} required />
+				<input className="chat-body" value={editBody} placeholder="내용" ref={bodyRef} disabled={!edit} required />
 			</ChatBox>
 			{edit && (
-				<SaveBtn className="edit" onClick={onSubmit}>
-					저장
-				</SaveBtn>
+				<>
+					<EditBtnWrap>
+						<button className="saveBtn" onClick={onSubmit}>
+							저장
+						</button>
+						<button className="cancelBtn" onClick={onCancel}>
+							취소
+						</button>
+					</EditBtnWrap>
+				</>
 			)}
 		</ChatItemWrap>
 	);
@@ -131,23 +144,6 @@ const ChatItemWrap = styled.li`
 		}
 	}
 `;
-const SaveBtn = styled.button`
-	flex: 0 0 auto;
-	height: 25px;
-	padding: 0 10px;
-	border: none;
-	font-size: 13px;
-	font-weight: 600;
-	background: #333;
-	color: #fff;
-	border-radius: 3px;
-	cursor: pointer;
-	&.edit {
-		position: absolute;
-		top: 0;
-		right: -55px;
-	}
-`;
 const ChatBox = styled.div`
 	width: fit-content;
 	height: fit-content;
@@ -181,6 +177,31 @@ const ChatBox = styled.div`
 		}
 		&.chat-body {
 			font-size: 14px;
+		}
+	}
+`;
+const EditBtnWrap = styled.div`
+	position: absolute;
+	top: 0;
+	right: -55px;
+	display: flex;
+	flex-flow: column;
+	button {
+		flex: 0 0 auto;
+		height: 25px;
+		padding: 0 10px;
+		border: none;
+		font-size: 13px;
+		font-weight: 600;
+		border-radius: 3px;
+		color: #fff;
+		cursor: pointer;
+		&.saveBtn {
+			background: #333;
+			margin-bottom: 5px;
+		}
+		&.cancelBtn {
+			background: #bbb;
 		}
 	}
 `;
