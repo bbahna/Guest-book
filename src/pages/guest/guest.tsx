@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ChatItem from '../../components/guest/chatItem';
+// import ChatModal from '../../components/guest/chatModal';
 import Template from '../../components/template/template';
 
 export interface IGuest {
@@ -27,8 +28,6 @@ function GuestPage() {
 
 	// Create
 	const [color, setColor] = useState('#ffcad4');
-	const titleRef = useRef<any>(null);
-	const bodyRef = useRef<any>(null);
 	function onSubmit(e: React.FormEvent) {
 		e.preventDefault();
 
@@ -38,8 +37,8 @@ function GuestPage() {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				title: titleRef.current.value,
-				body: bodyRef.current.value,
+				title: title,
+				body: body,
 				color: color,
 			}),
 		}).then((res) => {
@@ -86,7 +85,6 @@ function GuestPage() {
 								<input
 									className="chat-title"
 									placeholder="제목"
-									ref={titleRef}
 									value={title}
 									onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 										setTitle(e.target.value);
@@ -96,7 +94,6 @@ function GuestPage() {
 								<input
 									className="chat-body"
 									placeholder="내용"
-									ref={bodyRef}
 									value={body}
 									onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 										setBody(e.target.value);
@@ -104,17 +101,18 @@ function GuestPage() {
 									required
 								/>
 							</ChatBox>
-							<ul className="color-select">
+							<ColorSelect>
 								<li className="color-1" onClick={() => setColor('#ffcad4')} />
 								<li className="color-2" onClick={() => setColor('#ffe5d9')} />
 								<li className="color-3" onClick={() => setColor('#cce4de')} />
 								<li className="color-4" onClick={() => setColor('#dee5fc')} />
 								<li className="color-5" onClick={() => setColor('#cbc0d3')} />
-							</ul>
+							</ColorSelect>
 						</div>
 						<SaveBtn>입력</SaveBtn>
 					</form>
 				</ChatInput>
+				{/* <ChatModal /> */}
 			</GuestWrap>
 		</Template>
 	);
@@ -235,36 +233,36 @@ const ChatInput = styled.div`
 			margin-right: 8px;
 		}
 	}
-	.color-select {
-		flex: 0 0 auto;
-		display: flex;
-		flex-flow: row nowrap;
-		margin-top: 5px;
-		li {
-			width: 20px;
-			height: 20px;
-			border-radius: 50%;
-			margin-left: 8px;
-			cursor: pointer;
-			&:hover {
-				border: 1px solid #333;
-				box-sizing: border-box;
-			}
-			&.color-1 {
-				background: #ffcad4;
-			}
-			&.color-2 {
-				background: #ffe5d9;
-			}
-			&.color-3 {
-				background: #cce4de;
-			}
-			&.color-4 {
-				background: #dee5fc;
-			}
-			&.color-5 {
-				background: #cbc0d3;
-			}
+`;
+const ColorSelect = styled.ul`
+	flex: 0 0 auto;
+	display: flex;
+	flex-flow: row nowrap;
+	margin-top: 5px;
+	li {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		margin-left: 8px;
+		cursor: pointer;
+		&:hover {
+			border: 1px solid #333;
+			box-sizing: border-box;
+		}
+		&.color-1 {
+			background: #ffcad4;
+		}
+		&.color-2 {
+			background: #ffe5d9;
+		}
+		&.color-3 {
+			background: #cce4de;
+		}
+		&.color-4 {
+			background: #dee5fc;
+		}
+		&.color-5 {
+			background: #cbc0d3;
 		}
 	}
 `;

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import editIcon from '../../assets/pencil.svg';
 import deleteIcon from '../../assets/trash.svg';
@@ -16,11 +16,11 @@ function ChatItem({ id, title, body, color, setData }: IProps) {
 	const [edit, setEdit] = useState(false);
 	const [editTitle, setEditTitle] = useState<string>(title);
 	const [editBody, setEditBody] = useState<string>(body);
-	const titleRef = useRef<any>(null);
-	const bodyRef = useRef<any>(null);
+	const [editColor, setEditColor] = useState<string>(color);
 
 	const editToggle = () => setEdit(!edit);
-	function onSubmit() {
+
+	const onSubmit = () => {
 		fetch(`http://localhost:4000/guest/${id}`, {
 			method: 'PUT',
 			headers: {
@@ -29,21 +29,30 @@ function ChatItem({ id, title, body, color, setData }: IProps) {
 			body: JSON.stringify({
 				title: editTitle,
 				body: editBody,
-				color: color,
+				color: editColor,
 			}),
 		}).then((res) => {
 			if (res.ok) {
 				alert('수정이 완료되었습니다');
+				// Get 재요청
+				fetch('http://localhost:4000/guest')
+					.then((res) => {
+						return res.json();
+					})
+					.then((data) => {
+						setData(data);
+					});
 				setEdit(false);
 			} else {
 				alert('수정이 실패하였습니다.');
 			}
 		});
-	}
+	};
 
 	const onCancel = () => {
 		setEditTitle(title);
 		setEditBody(body);
+		setEditColor(color);
 		setEdit(false);
 	};
 
@@ -81,17 +90,28 @@ function ChatItem({ id, title, body, color, setData }: IProps) {
 					</button>
 				</div>
 			)}
-			<ChatBox style={{ background: `${color}` }}>
+			<ChatBox style={{ background: `${editColor}` }}>
 				<input
 					className="chat-title"
 					value={editTitle}
+					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+						setEditTitle(e.target.value);
+					}}
 					placeholder="제목"
-					ref={titleRef}
 					disabled={!edit}
 					required
 					autoFocus
 				/>
-				<input className="chat-body" value={editBody} placeholder="내용" ref={bodyRef} disabled={!edit} required />
+				<input
+					className="chat-body"
+					value={editBody}
+					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+						setEditBody(e.target.value);
+					}}
+					placeholder="내용"
+					disabled={!edit}
+					required
+				/>
 			</ChatBox>
 			{edit && (
 				<>
@@ -103,6 +123,13 @@ function ChatItem({ id, title, body, color, setData }: IProps) {
 							취소
 						</button>
 					</EditBtnWrap>
+					<ColorSelect>
+						<li className="color-1" onClick={() => setEditColor('#ffcad4')} />
+						<li className="color-2" onClick={() => setEditColor('#ffe5d9')} />
+						<li className="color-3" onClick={() => setEditColor('#cce4de')} />
+						<li className="color-4" onClick={() => setEditColor('#dee5fc')} />
+						<li className="color-5" onClick={() => setEditColor('#cbc0d3')} />
+					</ColorSelect>
 				</>
 			)}
 		</ChatItemWrap>
@@ -202,6 +229,38 @@ const EditBtnWrap = styled.div`
 		}
 		&.cancelBtn {
 			background: #bbb;
+		}
+	}
+`;
+const ColorSelect = styled.ul`
+	flex: 0 0 auto;
+	display: flex;
+	flex-flow: row nowrap;
+	margin-top: 8px;
+	li {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		margin-left: 8px;
+		cursor: pointer;
+		&:hover {
+			border: 1px solid #333;
+			box-sizing: border-box;
+		}
+		&.color-1 {
+			background: #ffcad4;
+		}
+		&.color-2 {
+			background: #ffe5d9;
+		}
+		&.color-3 {
+			background: #cce4de;
+		}
+		&.color-4 {
+			background: #dee5fc;
+		}
+		&.color-5 {
+			background: #cbc0d3;
 		}
 	}
 `;
