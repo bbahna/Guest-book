@@ -11,6 +11,8 @@ export interface IGuest {
 }
 
 function GuestPage() {
+	const [title, setTitle] = useState<string>('');
+	const [body, setBody] = useState<string>('');
 	// Read
 	const [data, setData] = useState<IGuest[]>([]);
 	useEffect(() => {
@@ -43,6 +45,9 @@ function GuestPage() {
 		}).then((res) => {
 			if (res.ok) {
 				alert('생성이 완료되었습니다');
+				setTitle('');
+				setBody('');
+				setColor('#ffcad4');
 				// Get 재요청
 				fetch('http://localhost:4000/guest')
 					.then((res) => {
@@ -78,8 +83,26 @@ function GuestPage() {
 					<form onSubmit={onSubmit}>
 						<div className="input-wrap">
 							<ChatBox style={{ background: color }}>
-								<input className="chat-title" placeholder="제목" ref={titleRef} required />
-								<input className="chat-body" placeholder="내용" ref={bodyRef} required />
+								<input
+									className="chat-title"
+									placeholder="제목"
+									ref={titleRef}
+									value={title}
+									onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+										setTitle(e.target.value);
+									}}
+									required
+								/>
+								<input
+									className="chat-body"
+									placeholder="내용"
+									ref={bodyRef}
+									value={body}
+									onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+										setBody(e.target.value);
+									}}
+									required
+								/>
 							</ChatBox>
 							<ul className="color-select">
 								<li className="color-1" onClick={() => setColor('#ffcad4')} />
