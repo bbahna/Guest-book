@@ -1,8 +1,8 @@
 {
 	"guest": [
 		{
-			"title": "첫 제목 수정",
-			"body": "첫 내용 수정",
+			"title": "첫 제목",
+			"body": "첫 내용",
 			"color": "#ffcad4",
 			"id": 1
 		},
