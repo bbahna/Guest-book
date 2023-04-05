@@ -15,8 +15,8 @@ const ChatModal = ({ ModalShow, toggleModalShow, title, body, color, createAt }:
 			<div className="outArea" onClick={toggleModalShow} />
 			<div className="modalBox" style={{ background: `${color}` }}>
 				<div className="chat-box">
-					<input className="chat-title" value={title} placeholder="제목" disabled />
-					<input className="chat-body" value={body} placeholder="내용" disabled />
+					<p className="chat-title">{title}</p>
+					<p className="chat-body">{body}</p>
 				</div>
 				<div className="bottom-box">
 					<p className="date-text">{createAt}</p>
@@ -49,13 +49,13 @@ const ModalWrap = styled.div`
 		cursor: pointer;
 	}
 	.modalBox {
-		width: 300px;
-		height: 200px;
+		width: 500px;
+		height: 400px;
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: space-between;
 		position: fixed;
-		top: 220px;
+		top: 120px;
 		left: 50%;
 		transform: translate(-50%, 0);
 		border-radius: 10px 10px 0 10px;
@@ -63,15 +63,30 @@ const ModalWrap = styled.div`
 		box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.15);
 		z-index: 9;
 		box-sizing: border-box;
+		overflow-x: hidden;
+		overflow-y: auto;
+		&::-webkit-scrollbar {
+			width: 8px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: #bbb;
+			border-radius: 10px;
+			cursor: pointer;
+		}
+		&::-webkit-scrollbar-track {
+			background-color: #eee;
+			border-radius: 10px;
+		}
 		.chat-box {
 			flex: 1 1 auto;
 			display: flex;
 			flex-flow: column nowrap;
-			input {
+			p {
 				background: none;
 				border: none;
 				font-family: 'Noto Sans KR', sans-serif;
 				color: #333;
+				word-wrap: break-word;
 				&:focus {
 					outline: none;
 				}

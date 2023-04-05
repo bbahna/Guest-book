@@ -18,7 +18,7 @@ const Template = ({ children }: IProps) => {
 			<header>
 				<div className="global-navi">
 					<h1>Lifelog</h1>
-					<p>효동동 Blog</p>
+					<p>@ jeong_hYoon</p>
 				</div>
 				<nav style={{ display: 'none' }}>
 					<ul className="side-navi">

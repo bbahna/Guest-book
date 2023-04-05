@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
+import { ReactComponent as CreateIcon } from '../../assets/pencil.svg';
 import ChatItem from '../../components/guest/chatItem';
 import Template from '../../components/template/template';
 
@@ -31,7 +32,11 @@ function GuestPage() {
 
 	// Create
 	const [color, setColor] = useState('#ffcad4');
-	function onSubmit(e: React.FormEvent) {
+	// ChatItem Click시, Modal 보기
+	const [Create, setCreate] = useState(false);
+	const toggleCreate = () => setCreate(!Create);
+
+	const onSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 
 		fetch(`http://localhost:4000/guest`, {
@@ -63,14 +68,21 @@ function GuestPage() {
 				alert('생성이 실패하였습니다.');
 			}
 		});
-	}
+	};
+
+	const onCancel = () => {
+		setTitle('');
+		setBody('');
+		setColor('#ffcad4');
+		setCreate(false);
+	};
 
 	return (
 		<Template>
 			<GuestWrap>
 				<GuestTop>
 					<h2>Guest-book</h2>
-					<p>멋진 방명록을 남겨주세요.</p>
+					<p>멋진 안부글을 남겨주세요.</p>
 				</GuestTop>
 				<ChatWrap>
 					{data.length === 0 ? (
@@ -92,52 +104,64 @@ function GuestPage() {
 						})
 					)}
 				</ChatWrap>
-				<ChatInput>
-					<form onSubmit={onSubmit}>
-						<div className="input-wrap">
-							<ChatBox style={{ background: color }}>
-								<input
-									className="chat-title"
-									placeholder="제목"
-									value={title}
-									onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-										setTitle(e.target.value);
-									}}
-									required
-								/>
-								<input
-									className="chat-body"
-									placeholder="내용"
-									value={body}
-									onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-										setBody(e.target.value);
-									}}
-									required
-								/>
-							</ChatBox>
-							<ColorSelect>
-								<li className="color-1" onClick={() => setColor('#ffcad4')} />
-								<li className="color-2" onClick={() => setColor('#ffe5d9')} />
-								<li className="color-3" onClick={() => setColor('#cce4de')} />
-								<li className="color-4" onClick={() => setColor('#dee5fc')} />
-								<li className="color-5" onClick={() => setColor('#cbc0d3')} />
-								<li className="color-6" onClick={() => setColor('#e9e9e9')} />
-							</ColorSelect>
-						</div>
-						<SaveBtn>입력</SaveBtn>
-					</form>
-				</ChatInput>
+				<CreateWrap>
+					<ChatCreate className={Create ? 'inputWrap' : 'iconWrap'}>
+						{Create ? (
+							<form onSubmit={onSubmit}>
+								<div className="input-wrap">
+									<ChatBox style={{ background: color }}>
+										<input
+											placeholder="제목"
+											value={title}
+											onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+												setTitle(e.target.value);
+											}}
+											required
+										/>
+										<textarea
+											placeholder="내용"
+											value={body}
+											onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+												setBody(e.target.value);
+											}}
+											required
+										/>
+									</ChatBox>
+									<ColorSelect>
+										<li className="color-1" onClick={() => setColor('#ffcad4')} />
+										<li className="color-2" onClick={() => setColor('#ffe5d9')} />
+										<li className="color-3" onClick={() => setColor('#cce4de')} />
+										<li className="color-4" onClick={() => setColor('#dee5fc')} />
+										<li className="color-5" onClick={() => setColor('#cbc0d3')} />
+										<li className="color-6" onClick={() => setColor('#e9e9e9')} />
+									</ColorSelect>
+								</div>
+								<EditBtnWrap>
+									<button className="saveBtn" onClick={onSubmit}>
+										입력
+									</button>
+									<button className="cancelBtn" onClick={onCancel}>
+										취소
+									</button>
+								</EditBtnWrap>
+							</form>
+						) : (
+							<CreateIcon className="createIcon" onClick={toggleCreate} />
+						)}
+					</ChatCreate>
+					{Create && <div className="outArea" onClick={toggleCreate} />}
+				</CreateWrap>
 			</GuestWrap>
 		</Template>
 	);
 }
 
 const GuestWrap = styled.div`
-	width: 1200px;
+	width: 936px;
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: space-between;
-	padding: 20px 120px;
+	margin: 20px 120px;
 	box-sizing: border-box;
 	font-size: 15px;
 `;
@@ -160,7 +184,7 @@ const GuestTop = styled.div`
 const ChatWrap = styled.ul`
 	flex: 1 1 auto;
 	display: flex;
-	flex-flow: column nowrap;
+	flex-flow: row wrap;
 	align-items: flex-end;
 	padding-bottom: 75px;
 	.no-data {
@@ -172,10 +196,8 @@ const ChatWrap = styled.ul`
 	}
 `;
 const ChatBox = styled.div`
-	width: fit-content;
-	height: fit-content;
-	min-width: 250px;
-	max-width: 500px;
+	width: 200px;
+	height: 200px;
 	display: flex;
 	flex-flow: column nowrap;
 	padding: 10px;
@@ -183,60 +205,110 @@ const ChatBox = styled.div`
 	box-shadow: 2px 3px 5px rgba(170, 170, 170, 0.5);
 	input {
 		background: none;
-		/* border: 1px solid #bbb; */
 		border: none;
 		font-family: 'Noto Sans KR', sans-serif;
 		color: #333;
+		font-size: 15.5px;
+		line-height: 18px;
+		font-weight: 500;
+		margin-bottom: 0;
 		&:focus {
 			outline: none;
 		}
 		&:disabled {
 			border: none;
-			&.chat-title {
-				margin-bottom: 0;
-			}
 		}
-		&.chat-title {
-			/* margin-bottom: 5px; */
-			font-size: 15.5px;
-			line-height: 18px;
-			font-weight: 500;
+	}
+	textarea {
+		flex: 1;
+		background: none;
+		border: none;
+		font-family: 'Noto Sans KR', sans-serif;
+		color: #333;
+		font-weight: 400;
+		font-size: 14px;
+		resize: none;
+		padding: 0;
+		&:focus {
+			outline: none;
 		}
-		&.chat-body {
-			font-size: 14px;
+		&::-webkit-scrollbar {
+			width: 8px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: #bbb;
+			border-radius: 10px;
+			cursor: pointer;
+		}
+		&::-webkit-scrollbar-track {
+			background-color: #eee;
+			border-radius: 10px;
 		}
 	}
 `;
-const SaveBtn = styled.button`
-	flex: 0 0 auto;
-	height: 25px;
-	padding: 0 10px;
-	border: none;
-	font-size: 13px;
-	font-weight: 600;
-	background: #333;
-	color: #fff;
-	border-radius: 3px;
-	cursor: pointer;
-	&.edit {
-		position: absolute;
+const EditBtnWrap = styled.div`
+	display: flex;
+	flex-flow: column;
+	z-index: 1;
+	button {
+		flex: 0 0 auto;
+		width: 46px;
+		height: 25px;
+		padding: 0 10px;
+		border: none;
+		font-size: 13px;
+		font-weight: 600;
+		border-radius: 3px;
+		color: #fff;
+		cursor: pointer;
+		&.saveBtn {
+			background: #333;
+			margin-bottom: 5px;
+		}
+		&.cancelBtn {
+			background: #bbb;
+		}
+	}
+`;
+const CreateWrap = styled.div`
+	.outArea {
+		width: 100%;
+		height: 100vh;
+		position: fixed;
 		top: 0;
-		right: -55px;
+		left: 0;
+		z-index: 1;
+		cursor: pointer;
 	}
 `;
-const ChatInput = styled.div`
-	width: 500px;
+const ChatCreate = styled.div`
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
 	justify-content: center;
 	position: fixed;
-	bottom: 50px;
-	left: 50%;
-	transform: translate(-50%, 0);
-	padding: 10px 0;
+	right: 120px;
+	bottom: 100px;
+	padding: 10px;
 	background: rgba(80, 80, 80, 0.8);
-	border-radius: 50px 50px 80px 80px;
+	z-index: 5;
+	transition: 0.5s;
+	overflow: hidden;
+	&.inputWrap {
+		width: 280px;
+		height: 255px;
+		border-radius: 10px;
+	}
+	&.iconWrap {
+		width: 30px;
+		height: 30px;
+		padding: 20px;
+		border-radius: 50%;
+		cursor: pointer;
+	}
+	.createIcon path {
+		fill: #fff;
+	}
 	form {
 		flex: 0 0 auto;
 		display: flex;
