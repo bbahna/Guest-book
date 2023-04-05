@@ -10,7 +10,7 @@ export interface IGuest {
 	title: string;
 	body: string;
 	color: string;
-	createAt: string;
+	date: string;
 }
 
 function GuestPage() {
@@ -48,7 +48,7 @@ function GuestPage() {
 				title: title,
 				body: body,
 				color: color,
-				createAt: now.format('YYYY-MM-DD HH:mm'),
+				date: now.format('YYYY-MM-DD HH:mm'),
 			}),
 		}).then((res) => {
 			if (res.ok) {
@@ -97,7 +97,7 @@ function GuestPage() {
 									color={o.color}
 									title={o.title}
 									body={o.body}
-									createAt={o.createAt}
+									date={o.date}
 									setData={setData}
 								/>
 							);
@@ -185,7 +185,6 @@ const ChatWrap = styled.ul`
 	flex: 1 1 auto;
 	display: flex;
 	flex-flow: row wrap;
-	align-items: flex-end;
 	padding-bottom: 75px;
 	.no-data {
 		margin: 20px 0;

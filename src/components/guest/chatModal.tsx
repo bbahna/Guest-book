@@ -4,12 +4,12 @@ interface IProps {
 	title: string;
 	body: string;
 	color: string;
-	createAt: string;
+	date: string;
 	ModalShow: boolean;
 	toggleModalShow: () => void;
 }
 
-const ChatModal = ({ ModalShow, toggleModalShow, title, body, color, createAt }: IProps) => {
+const ChatModal = ({ ModalShow, toggleModalShow, title, body, color, date }: IProps) => {
 	return (
 		<ModalWrap className={ModalShow ? 'close' : 'open'}>
 			<div className="outArea" onClick={toggleModalShow} />
@@ -19,7 +19,7 @@ const ChatModal = ({ ModalShow, toggleModalShow, title, body, color, createAt }:
 					<p className="chat-body">{body}</p>
 				</div>
 				<div className="bottom-box">
-					<p className="date-text">{createAt}</p>
+					<p className="date-text">{date}</p>
 				</div>
 				{/* <div className="bottom-box">
 					<button className="delete-btn">삭제</button>

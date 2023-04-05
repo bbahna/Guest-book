@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
 import editIcon from '../../assets/pencil.svg';
 import deleteIcon from '../../assets/trash.svg';
@@ -10,11 +11,12 @@ interface IProps {
 	title: string;
 	body: string;
 	color: string;
-	createAt: string;
+	date: string;
 	setData: React.Dispatch<React.SetStateAction<IGuest[]>>;
 }
 
-function ChatItem({ id, title, body, color, createAt, setData }: IProps) {
+function ChatItem({ id, title, body, color, date, setData }: IProps) {
+	const now = dayjs();
 	const [edit, setEdit] = useState(false);
 	const editToggle = () => setEdit(!edit);
 	const [editTitle, setEditTitle] = useState<string>(title);
@@ -34,6 +36,7 @@ function ChatItem({ id, title, body, color, createAt, setData }: IProps) {
 				title: editTitle,
 				body: editBody,
 				color: editColor,
+				date: now.format('YYYY-MM-DD HH:mm'),
 			}),
 		}).then((res) => {
 			if (res.ok) {
@@ -147,7 +150,7 @@ function ChatItem({ id, title, body, color, createAt, setData }: IProps) {
 					title={title}
 					body={body}
 					color={color}
-					createAt={createAt}
+					date={date}
 					ModalShow={ModalShow}
 					toggleModalShow={toggleModalShow}
 				/>
