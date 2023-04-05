@@ -3,22 +3,26 @@ import styled from 'styled-components';
 import editIcon from '../../assets/pencil.svg';
 import deleteIcon from '../../assets/trash.svg';
 import { IGuest } from '../../pages/guest/guest';
+import ChatModal from '../../components/guest/chatModal';
 
 interface IProps {
 	id: number;
 	title: string;
 	body: string;
 	color: string;
+	createAt: string;
 	setData: React.Dispatch<React.SetStateAction<IGuest[]>>;
 }
 
-function ChatItem({ id, title, body, color, setData }: IProps) {
+function ChatItem({ id, title, body, color, createAt, setData }: IProps) {
 	const [edit, setEdit] = useState(false);
+	const editToggle = () => setEdit(!edit);
 	const [editTitle, setEditTitle] = useState<string>(title);
 	const [editBody, setEditBody] = useState<string>(body);
 	const [editColor, setEditColor] = useState<string>(color);
-
-	const editToggle = () => setEdit(!edit);
+	// ChatItem Click시, Modal 보기
+	const [ModalShow, setModalShow] = useState(true);
+	const toggleModalShow = () => setModalShow(!ModalShow);
 
 	const onSubmit = () => {
 		fetch(`http://localhost:4000/guest/${id}`, {
@@ -79,67 +83,83 @@ function ChatItem({ id, title, body, color, setData }: IProps) {
 	};
 
 	return (
-		<ChatItemWrap>
+		<>
+			<ChatItemWrap>
+				{!edit && (
+					<div className="hover-bar">
+						<button className="edit-btn" onClick={editToggle}>
+							<img src={editIcon} alt="수정아이콘" />
+						</button>
+						<button className="delete-btn" onClick={onDelete}>
+							<img src={deleteIcon} alt="삭제아이콘" />
+						</button>
+					</div>
+				)}
+				<ChatBox style={{ background: `${editColor}` }} onClick={toggleModalShow}>
+					<input
+						value={editTitle}
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+							setEditTitle(e.target.value);
+						}}
+						placeholder="제목"
+						disabled={!edit}
+						required
+						autoFocus
+					/>
+					{edit ? (
+						<textarea
+							value={editBody}
+							onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+								setEditBody(e.target.value);
+							}}
+							className="chat-body"
+							placeholder="내용"
+							disabled={!edit}
+							required
+						/>
+					) : (
+						<p className="chat-body">{editBody}</p>
+					)}
+				</ChatBox>
+				{edit && (
+					<>
+						<EditBtnWrap>
+							<button className="saveBtn" onClick={onSubmit}>
+								저장
+							</button>
+							<button className="cancelBtn" onClick={onCancel}>
+								취소
+							</button>
+						</EditBtnWrap>
+						<ul className="colorSelect">
+							<li className="color-1" onClick={() => setEditColor('#ffcad4')} />
+							<li className="color-2" onClick={() => setEditColor('#ffe5d9')} />
+							<li className="color-3" onClick={() => setEditColor('#cce4de')} />
+							<li className="color-4" onClick={() => setEditColor('#dee5fc')} />
+							<li className="color-5" onClick={() => setEditColor('#cbc0d3')} />
+							<li className="color-6" onClick={() => setEditColor('#e9e9e9')} />
+						</ul>
+					</>
+				)}
+			</ChatItemWrap>
 			{!edit && (
-				<div className="hover-bar">
-					<button className="edit-btn" onClick={editToggle}>
-						<img src={editIcon} alt="수정아이콘" />
-					</button>
-					<button className="delete-btn" onClick={onDelete}>
-						<img src={deleteIcon} alt="삭제아이콘" />
-					</button>
-				</div>
-			)}
-			<ChatBox style={{ background: `${editColor}` }}>
-				<input
-					className="chat-title"
-					value={editTitle}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-						setEditTitle(e.target.value);
-					}}
-					placeholder="제목"
-					disabled={!edit}
-					required
-					autoFocus
+				<ChatModal
+					title={title}
+					body={body}
+					color={color}
+					createAt={createAt}
+					ModalShow={ModalShow}
+					toggleModalShow={toggleModalShow}
 				/>
-				<input
-					className="chat-body"
-					value={editBody}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-						setEditBody(e.target.value);
-					}}
-					placeholder="내용"
-					disabled={!edit}
-					required
-				/>
-			</ChatBox>
-			{edit && (
-				<>
-					<EditBtnWrap>
-						<button className="saveBtn" onClick={onSubmit}>
-							저장
-						</button>
-						<button className="cancelBtn" onClick={onCancel}>
-							취소
-						</button>
-					</EditBtnWrap>
-					<ColorSelect>
-						<li className="color-1" onClick={() => setEditColor('#ffcad4')} />
-						<li className="color-2" onClick={() => setEditColor('#ffe5d9')} />
-						<li className="color-3" onClick={() => setEditColor('#cce4de')} />
-						<li className="color-4" onClick={() => setEditColor('#dee5fc')} />
-						<li className="color-5" onClick={() => setEditColor('#cbc0d3')} />
-					</ColorSelect>
-				</>
 			)}
-		</ChatItemWrap>
+		</>
 	);
 }
 
 const ChatItemWrap = styled.li`
 	flex: 0 0 auto;
 	position: relative;
-	margin-bottom: 13px;
+	margin: 0 7px 14px;
 	&:hover .hover-bar {
 		display: flex;
 		flex-flow: row nowrap;
@@ -170,40 +190,102 @@ const ChatItemWrap = styled.li`
 			}
 		}
 	}
+	&:hover .colorSelect {
+		flex: 0 0 auto;
+		display: flex;
+		flex-flow: row nowrap;
+		position: absolute;
+		bottom: 8px;
+		li {
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			margin-left: 8px;
+			border: 1px solid #fff;
+			box-sizing: border-box;
+			cursor: pointer;
+			&:hover {
+				border-color: #777;
+			}
+			&.color-1 {
+				background: #ffcad4;
+			}
+			&.color-2 {
+				background: #ffe5d9;
+			}
+			&.color-3 {
+				background: #cce4de;
+			}
+			&.color-4 {
+				background: #dee5fc;
+			}
+			&.color-5 {
+				background: #cbc0d3;
+			}
+			&.color-6 {
+				background: #dddddd;
+			}
+		}
+	}
 `;
 const ChatBox = styled.div`
-	width: fit-content;
-	height: fit-content;
-	min-width: 250px;
-	max-width: 500px;
+	width: 200px;
+	height: 200px;
 	display: flex;
 	flex-flow: column nowrap;
 	padding: 10px;
 	border-radius: 8px 8px 0 8px;
 	box-shadow: 2px 3px 5px rgba(170, 170, 170, 0.5);
+	cursor: pointer;
 	input {
 		background: none;
-		/* border: 1px solid #bbb; */
 		border: none;
 		font-family: 'Noto Sans KR', sans-serif;
 		color: #333;
+		font-size: 15.5px;
+		line-height: 18px;
+		font-weight: 500;
+		margin-bottom: 0;
+		text-overflow: ellipsis;
+		overflow: hidden;
 		&:focus {
 			outline: none;
 		}
 		&:disabled {
 			border: none;
-			&.chat-title {
-				margin-bottom: 0;
-			}
 		}
-		&.chat-title {
-			/* margin-bottom: 5px; */
-			font-size: 15.5px;
-			line-height: 18px;
-			font-weight: 500;
+	}
+	p {
+		white-space: normal;
+		display: -webkit-box;
+		-webkit-line-clamp: 9;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	.chat-body {
+		flex: 1;
+		background: none;
+		border: none;
+		font-family: 'Noto Sans KR', sans-serif;
+		color: #333;
+		font-weight: 400;
+		font-size: 14px;
+		resize: none;
+		padding: 0;
+		&:focus {
+			outline: none;
 		}
-		&.chat-body {
-			font-size: 14px;
+		&::-webkit-scrollbar {
+			width: 8px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: #bbb;
+			border-radius: 10px;
+			cursor: pointer;
+		}
+		&::-webkit-scrollbar-track {
+			background-color: #eee;
+			border-radius: 10px;
 		}
 	}
 `;
@@ -213,6 +295,7 @@ const EditBtnWrap = styled.div`
 	right: -55px;
 	display: flex;
 	flex-flow: column;
+	z-index: 1;
 	button {
 		flex: 0 0 auto;
 		height: 25px;
@@ -229,38 +312,6 @@ const EditBtnWrap = styled.div`
 		}
 		&.cancelBtn {
 			background: #bbb;
-		}
-	}
-`;
-const ColorSelect = styled.ul`
-	flex: 0 0 auto;
-	display: flex;
-	flex-flow: row nowrap;
-	margin-top: 8px;
-	li {
-		width: 20px;
-		height: 20px;
-		border-radius: 50%;
-		margin-left: 8px;
-		cursor: pointer;
-		&:hover {
-			border: 1px solid #333;
-			box-sizing: border-box;
-		}
-		&.color-1 {
-			background: #ffcad4;
-		}
-		&.color-2 {
-			background: #ffe5d9;
-		}
-		&.color-3 {
-			background: #cce4de;
-		}
-		&.color-4 {
-			background: #dee5fc;
-		}
-		&.color-5 {
-			background: #cbc0d3;
 		}
 	}
 `;

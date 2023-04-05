@@ -1,27 +1,30 @@
-/**
- * @name chat-modal
- * @description 미사용
- */
-import { useState } from 'react';
 import styled from 'styled-components';
 
-const ChatModal = () => {
-	// Modal-button Click시, useState 상태변경
-	const [ModalShow, setModalShow] = useState(true);
-	const toggleModalShow = () => setModalShow(!ModalShow);
+interface IProps {
+	title: string;
+	body: string;
+	color: string;
+	createAt: string;
+	ModalShow: boolean;
+	toggleModalShow: () => void;
+}
 
+const ChatModal = ({ ModalShow, toggleModalShow, title, body, color, createAt }: IProps) => {
 	return (
 		<ModalWrap className={ModalShow ? 'close' : 'open'}>
 			<div className="outArea" onClick={toggleModalShow} />
-			<div className="modalBox">
+			<div className="modalBox" style={{ background: `${color}` }}>
 				<div className="chat-box">
-					<input className="chat-title" placeholder="제목" />
-					<input className="chat-body" placeholder="내용" />
+					<p className="chat-title">{title}</p>
+					<p className="chat-body">{body}</p>
 				</div>
-				<div className="button-box">
+				<div className="bottom-box">
+					<p className="date-text">{createAt}</p>
+				</div>
+				{/* <div className="bottom-box">
 					<button className="delete-btn">삭제</button>
 					<button className="edit-btn">수정</button>
-				</div>
+				</div> */}
 			</div>
 		</ModalWrap>
 	);
@@ -46,30 +49,44 @@ const ModalWrap = styled.div`
 		cursor: pointer;
 	}
 	.modalBox {
-		width: 300px;
-		height: 200px;
+		width: 500px;
+		height: 400px;
 		display: flex;
 		flex-flow: column nowrap;
 		justify-content: space-between;
 		position: fixed;
-		top: 220px;
+		top: 120px;
 		left: 50%;
 		transform: translate(-50%, 0);
 		border-radius: 10px 10px 0 10px;
 		padding: 15px;
-		background: #ffcad4;
 		box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.15);
 		z-index: 9;
 		box-sizing: border-box;
+		overflow-x: hidden;
+		overflow-y: auto;
+		&::-webkit-scrollbar {
+			width: 8px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: #bbb;
+			border-radius: 10px;
+			cursor: pointer;
+		}
+		&::-webkit-scrollbar-track {
+			background-color: #eee;
+			border-radius: 10px;
+		}
 		.chat-box {
 			flex: 1 1 auto;
 			display: flex;
 			flex-flow: column nowrap;
-			input {
+			p {
 				background: none;
 				border: none;
 				font-family: 'Noto Sans KR', sans-serif;
 				color: #333;
+				word-wrap: break-word;
 				&:focus {
 					outline: none;
 				}
@@ -84,11 +101,18 @@ const ModalWrap = styled.div`
 				}
 			}
 		}
-		.button-box {
+		.bottom-box {
 			flex: 0 0 auto;
 			display: flex;
 			flex-flow: row nowrap;
 			justify-content: space-between;
+			.date-text {
+				flex: 1;
+				font-size: 12px;
+				color: #777;
+				text-align: right;
+				font-style: italic;
+			}
 			button {
 				flex: 0 0 auto;
 				background: none;
