@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
 import ChatItem from '../../components/guest/chatItem';
-// import ChatModal from '../../components/guest/chatModal';
 import Template from '../../components/template/template';
 
 export interface IGuest {
@@ -9,13 +9,16 @@ export interface IGuest {
 	title: string;
 	body: string;
 	color: string;
+	createAt: string;
 }
 
 function GuestPage() {
+	const now = dayjs();
 	const [title, setTitle] = useState<string>('');
 	const [body, setBody] = useState<string>('');
 	// Read
 	const [data, setData] = useState<IGuest[]>([]);
+	const reverse = [...data].reverse();
 	useEffect(() => {
 		fetch('http://localhost:4000/guest')
 			.then((res) => {
@@ -40,6 +43,7 @@ function GuestPage() {
 				title: title,
 				body: body,
 				color: color,
+				createAt: now.format('YYYY-MM-DD HH:mm'),
 			}),
 		}).then((res) => {
 			if (res.ok) {
@@ -73,8 +77,18 @@ function GuestPage() {
 						<p className="no-data">데이터가 없습니다.</p>
 					) : (
 						// $ json-server ./src/store/data.json --port 4000
-						data.map((o) => {
-							return <ChatItem key={o.id} id={o.id} color={o.color} title={o.title} body={o.body} setData={setData} />;
+						reverse.map((o) => {
+							return (
+								<ChatItem
+									key={o.id}
+									id={o.id}
+									color={o.color}
+									title={o.title}
+									body={o.body}
+									createAt={o.createAt}
+									setData={setData}
+								/>
+							);
 						})
 					)}
 				</ChatWrap>
@@ -107,12 +121,12 @@ function GuestPage() {
 								<li className="color-3" onClick={() => setColor('#cce4de')} />
 								<li className="color-4" onClick={() => setColor('#dee5fc')} />
 								<li className="color-5" onClick={() => setColor('#cbc0d3')} />
+								<li className="color-6" onClick={() => setColor('#e9e9e9')} />
 							</ColorSelect>
 						</div>
 						<SaveBtn>입력</SaveBtn>
 					</form>
 				</ChatInput>
-				{/* <ChatModal /> */}
 			</GuestWrap>
 		</Template>
 	);
@@ -263,6 +277,9 @@ const ColorSelect = styled.ul`
 		}
 		&.color-5 {
 			background: #cbc0d3;
+		}
+		&.color-6 {
+			background: #e9e9e9;
 		}
 	}
 `;

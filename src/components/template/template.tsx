@@ -20,7 +20,7 @@ const Template = ({ children }: IProps) => {
 					<h1>Lifelog</h1>
 					<p>효동동 Blog</p>
 				</div>
-				<nav>
+				<nav style={{ display: 'none' }}>
 					<ul className="side-navi">
 						<li>
 							<Link to="/">

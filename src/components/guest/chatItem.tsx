@@ -3,20 +3,25 @@ import styled from 'styled-components';
 import editIcon from '../../assets/pencil.svg';
 import deleteIcon from '../../assets/trash.svg';
 import { IGuest } from '../../pages/guest/guest';
+import ChatModal from '../../components/guest/chatModal';
 
 interface IProps {
 	id: number;
 	title: string;
 	body: string;
 	color: string;
+	createAt: string;
 	setData: React.Dispatch<React.SetStateAction<IGuest[]>>;
 }
 
-function ChatItem({ id, title, body, color, setData }: IProps) {
+function ChatItem({ id, title, body, color, createAt, setData }: IProps) {
 	const [edit, setEdit] = useState(false);
 	const [editTitle, setEditTitle] = useState<string>(title);
 	const [editBody, setEditBody] = useState<string>(body);
 	const [editColor, setEditColor] = useState<string>(color);
+	// ChatItem Click시, Modal 보기
+	const [ModalShow, setModalShow] = useState(true);
+	const toggleModalShow = () => setModalShow(!ModalShow);
 
 	const editToggle = () => setEdit(!edit);
 
@@ -79,60 +84,73 @@ function ChatItem({ id, title, body, color, setData }: IProps) {
 	};
 
 	return (
-		<ChatItemWrap>
+		<>
+			<ChatItemWrap>
+				{!edit && (
+					<div className="hover-bar">
+						<button className="edit-btn" onClick={editToggle}>
+							<img src={editIcon} alt="수정아이콘" />
+						</button>
+						<button className="delete-btn" onClick={onDelete}>
+							<img src={deleteIcon} alt="삭제아이콘" />
+						</button>
+					</div>
+				)}
+				<ChatBox style={{ background: `${editColor}` }} onClick={toggleModalShow}>
+					<input
+						className="chat-title"
+						value={editTitle}
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+							setEditTitle(e.target.value);
+						}}
+						placeholder="제목"
+						disabled={!edit}
+						required
+						autoFocus
+					/>
+					<input
+						className="chat-body"
+						value={editBody}
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+							setEditBody(e.target.value);
+						}}
+						placeholder="내용"
+						disabled={!edit}
+						required
+					/>
+				</ChatBox>
+				{edit && (
+					<>
+						<EditBtnWrap>
+							<button className="saveBtn" onClick={onSubmit}>
+								저장
+							</button>
+							<button className="cancelBtn" onClick={onCancel}>
+								취소
+							</button>
+						</EditBtnWrap>
+						<ColorSelect>
+							<li className="color-1" onClick={() => setEditColor('#ffcad4')} />
+							<li className="color-2" onClick={() => setEditColor('#ffe5d9')} />
+							<li className="color-3" onClick={() => setEditColor('#cce4de')} />
+							<li className="color-4" onClick={() => setEditColor('#dee5fc')} />
+							<li className="color-5" onClick={() => setEditColor('#cbc0d3')} />
+							<li className="color-6" onClick={() => setEditColor('#e9e9e9')} />
+						</ColorSelect>
+					</>
+				)}
+			</ChatItemWrap>
 			{!edit && (
-				<div className="hover-bar">
-					<button className="edit-btn" onClick={editToggle}>
-						<img src={editIcon} alt="수정아이콘" />
-					</button>
-					<button className="delete-btn" onClick={onDelete}>
-						<img src={deleteIcon} alt="삭제아이콘" />
-					</button>
-				</div>
-			)}
-			<ChatBox style={{ background: `${editColor}` }}>
-				<input
-					className="chat-title"
-					value={editTitle}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-						setEditTitle(e.target.value);
-					}}
-					placeholder="제목"
-					disabled={!edit}
-					required
-					autoFocus
+				<ChatModal
+					title={title}
+					body={body}
+					color={color}
+					createAt={createAt}
+					ModalShow={ModalShow}
+					toggleModalShow={toggleModalShow}
 				/>
-				<input
-					className="chat-body"
-					value={editBody}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-						setEditBody(e.target.value);
-					}}
-					placeholder="내용"
-					disabled={!edit}
-					required
-				/>
-			</ChatBox>
-			{edit && (
-				<>
-					<EditBtnWrap>
-						<button className="saveBtn" onClick={onSubmit}>
-							저장
-						</button>
-						<button className="cancelBtn" onClick={onCancel}>
-							취소
-						</button>
-					</EditBtnWrap>
-					<ColorSelect>
-						<li className="color-1" onClick={() => setEditColor('#ffcad4')} />
-						<li className="color-2" onClick={() => setEditColor('#ffe5d9')} />
-						<li className="color-3" onClick={() => setEditColor('#cce4de')} />
-						<li className="color-4" onClick={() => setEditColor('#dee5fc')} />
-						<li className="color-5" onClick={() => setEditColor('#cbc0d3')} />
-					</ColorSelect>
-				</>
 			)}
-		</ChatItemWrap>
+		</>
 	);
 }
 
@@ -181,12 +199,14 @@ const ChatBox = styled.div`
 	padding: 10px;
 	border-radius: 8px 8px 0 8px;
 	box-shadow: 2px 3px 5px rgba(170, 170, 170, 0.5);
+	cursor: pointer;
 	input {
 		background: none;
 		/* border: 1px solid #bbb; */
 		border: none;
 		font-family: 'Noto Sans KR', sans-serif;
 		color: #333;
+		cursor: pointer;
 		&:focus {
 			outline: none;
 		}
@@ -261,6 +281,9 @@ const ColorSelect = styled.ul`
 		}
 		&.color-5 {
 			background: #cbc0d3;
+		}
+		&.color-6 {
+			background: #dddddd;
 		}
 	}
 `;
