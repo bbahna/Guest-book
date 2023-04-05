@@ -7,3 +7,4 @@
 3. Style - responsive, grid/flex, theme, [modal](https://github.com/bbahna/typescript-react/pull/11)
 4. Route - main, sub, [popup](https://github.com/bbahna/typescript-react/pull/10)
 5. [CRUD](https://github.com/bbahna/Guest-book/pull/15) - REST API, json-server
+6. [refactoring](https://github.com/bbahna/Guest-book/pull/17), [refactoring2](https://github.com/bbahna/Guest-book/pull/18)
