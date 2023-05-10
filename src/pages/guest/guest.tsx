@@ -21,7 +21,7 @@ function GuestPage() {
 	const [data, setData] = useState<IGuest[]>([]);
 	const reverse = [...data].reverse();
 	useEffect(() => {
-		fetch('http://localhost:4000/guest')
+		fetch(`${process.env.REACT_APP}/guest`)
 			.then((res) => {
 				return res.json();
 			})
@@ -39,7 +39,7 @@ function GuestPage() {
 	const onSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 
-		fetch(`http://localhost:4000/guest`, {
+		fetch(`${process.env.REACT_APP}/guest`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ function GuestPage() {
 				setBody('');
 				setColor('#ffcad4');
 				// Get 재요청
-				fetch('http://localhost:4000/guest')
+				fetch(`${process.env.REACT_APP}/guest`)
 					.then((res) => {
 						return res.json();
 					})
