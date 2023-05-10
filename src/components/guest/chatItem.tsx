@@ -27,7 +27,7 @@ function ChatItem({ id, title, body, color, date, setData }: IProps) {
 	const toggleModalShow = () => setModalShow(!ModalShow);
 
 	const onSubmit = () => {
-		fetch(`${process.env.REACT_APP}/guest/${id}`, {
+		fetch(`${process.env.REACT_APP_GUEST}/guest/${id}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ function ChatItem({ id, title, body, color, date, setData }: IProps) {
 			if (res.ok) {
 				alert('수정이 완료되었습니다');
 				// Get 재요청
-				fetch(`${process.env.REACT_APP}/guest`)
+				fetch(`${process.env.REACT_APP_GUEST}/guest`)
 					.then((res) => {
 						return res.json();
 					})
@@ -65,13 +65,13 @@ function ChatItem({ id, title, body, color, date, setData }: IProps) {
 
 	const onDelete = () => {
 		if (window.confirm('삭제 하시겠습니까?')) {
-			fetch(`${process.env.REACT_APP}/guest/${id}`, {
+			fetch(`${process.env.REACT_APP_GUEST}/guest/${id}`, {
 				method: 'DELETE',
 			}).then((res) => {
 				if (res.ok) {
 					alert('삭제가 완료되었습니다');
 					// Get 재요청
-					fetch(`${process.env.REACT_APP}/guest`)
+					fetch(`${process.env.REACT_APP_GUEST}/guest`)
 						.then((res) => {
 							return res.json();
 						})

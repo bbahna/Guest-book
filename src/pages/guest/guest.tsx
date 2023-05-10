@@ -21,7 +21,7 @@ function GuestPage() {
 	const [data, setData] = useState<IGuest[]>([]);
 	const reverse = [...data].reverse();
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP}/guest`)
+		fetch(`${process.env.REACT_APP_GUEST}/guest`)
 			.then((res) => {
 				return res.json();
 			})
@@ -39,7 +39,7 @@ function GuestPage() {
 	const onSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 
-		fetch(`${process.env.REACT_APP}/guest`, {
+		fetch(`${process.env.REACT_APP_GUEST}/guest`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ function GuestPage() {
 				setBody('');
 				setColor('#ffcad4');
 				// Get 재요청
-				fetch(`${process.env.REACT_APP}/guest`)
+				fetch(`${process.env.REACT_APP_GUEST}/guest`)
 					.then((res) => {
 						return res.json();
 					})
