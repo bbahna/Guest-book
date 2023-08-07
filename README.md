@@ -1,5 +1,7 @@
 ## hyoon GuestBook project
 
+> node-version: 14.x.x
+
 `$ npx create-react-app "guest-book" --typescript`<br/>
 `$ json-server ./db.json --port 4000`
 
